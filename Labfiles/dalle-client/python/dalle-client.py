@@ -2,11 +2,6 @@ import os
 import json
 
 # Add references
-from dotenv import load_dotenv
-from azure.identity import DefaultAzureCredential
-from azure.ai.projects import AIProjectClient
-from openai import AzureOpenAI
-import requests
 
 
 def main(): 
@@ -24,7 +19,6 @@ def main():
         # Initialize the project client
         
         
-
         ## Get an OpenAI client
         
          

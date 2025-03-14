@@ -169,7 +169,6 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
    from azure.ai.projects import AIProjectClient
    from openai import AzureOpenAI
    import requests
-   from PIL import Image
     ```
 
     **C#**
