@@ -119,7 +119,7 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
     ```
    dotnet add package Azure.Identity
    dotnet add package Azure.AI.Projects --prerelease
-   dotnet add package Azure.AI.OpenAI --version 1.0.0-beta.6
+   dotnet add package Azure.AI.OpenAI
     ```
 
 1. Enter the following command to edit the configuration file that has been provided:
@@ -176,7 +176,8 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
     ```
    using Azure.Identity;
    using Azure.AI.Projects;
-   using Azure.AI.Inference;
+   using Azure.AI.OpenAI;
+   using OpenAI.Images;
     ```
 
 1. In the **main** function, under the comment **Get configuration settings**, note that the code loads the project connection string and model deployment name values you defined in the configuration file.
@@ -211,10 +212,14 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
     ```
    ConnectionResponse connection = projectClient.GetConnectionsClient().GetDefaultConnection(ConnectionType.AzureOpenAI, withCredential: true);
 
-    var connectionProperties = connection.Properties as ConnectionPropertiesApiKeyAuth;
-    AzureOpenAIClient openAIClient = new(
+   var connectionProperties = connection.Properties as ConnectionPropertiesApiKeyAuth;
+
+   AzureOpenAIClient openAIClient = new(
         new Uri(connectionProperties.Target),
         new AzureKeyCredential(connectionProperties.Credentials.Key));
+
+   ImageClient openAIimageClient = openAIClient.GetImageClient(model_deployment);
+
     ```
 
 1. Note that the code includes a loop to allow a user to input a prompt until they enter "quit". Then in the loop section, under the comment **Generate an image**, add the following code to submit the prompt and retrieve the URL for the generated image from your model:
@@ -235,16 +240,15 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
     **C#**
 
     ```
-   ImageClient imageClient = openAIClient.GetImageClient(model_deployment);
-   var imageGeneration = await chatClient.GenerateImageAsync(
-        input_text,
-        new ImageGenerationOptions()
-        {
-            Size = GeneratedImageSize.W1024xH1024
-        }
-    );
-
-   var imageUrl= imageGeneration.Value.ImageUri;
+   var imageGeneration = await openAIimageClient.GenerateImageAsync(
+            input_text
+            ,
+            new ImageGenerationOptions()
+            {
+                Size = GeneratedImageSize.W1024xH1024
+            }
+   );
+   imageUrl= imageGeneration.Value.ImageUri;
     ```
 
 1. Note that the code in the remainder of the **main** function passes the image URL and a filename to a provided function, which downloads the generated image and saves it as a .png file.

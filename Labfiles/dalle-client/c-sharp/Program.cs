@@ -3,7 +3,8 @@ using Azure;
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 // Add references
 
@@ -12,7 +13,7 @@ namespace dalle_client
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // Clear the console
             Console.Clear();
@@ -28,11 +29,14 @@ namespace dalle_client
                 // Initialize the project client
 
 
+
                 // Get an OpenAI client
+ 
 
 
                 // Loop until the user types 'quit'
                 int imageCount = 0;
+                Uri imageUrl;
                 string input_text = "";
                 while (input_text.ToLower() != "quit")
                 {
@@ -42,17 +46,19 @@ namespace dalle_client
                     if (input_text.ToLower() != "quit")
                     {
                         // Generate an image
+                        
 
 
                         // Save the image to a file
-                        imageCount++;
-                        string fileName = $"image_{imageCount}.png";
-                        SaveImage(imageUrl, fileName);
+                        if(imageUrl != null)
+                        {
+                            imageCount++;
+                            string fileName = $"image_{imageCount}.png";
+                            await SaveImage(imageUrl, fileName);
+                        }
                         
                     }
                 }
-
-
 
             }
             catch (Exception ex)
@@ -61,17 +67,24 @@ namespace dalle_client
             }
         }
 
-        static void SaveImage(Uri uri, string fileName)
+        static async Task SaveImage(Uri imageUrl, string fileName)
         {
-            // Create the file path
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            // Create the folder path
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "images");
+            Directory.CreateDirectory(folderPath);
+            string filePath = Path.Combine(folderPath, fileName);
 
-            // Download the image and save it to the specified path
-            using (var client = new WebClient())
+            // Download the image
+            using (HttpClient client = new HttpClient())
             {
-                client.DownloadFile(uri, filePath);
+                byte[] image = await client.GetByteArrayAsync(imageUrl);
+                File.WriteAllBytes(filePath, image);
             }
+            Console.WriteLine("Image saved as " + filePath);
+
+
         }
+
     }
 }
 
