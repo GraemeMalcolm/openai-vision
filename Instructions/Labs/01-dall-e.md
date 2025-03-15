@@ -241,8 +241,7 @@ The model seems to work in the playground. Now you can use the Azure OpenAI SDK 
 
     ```
    var imageGeneration = await openAIimageClient.GenerateImageAsync(
-            input_text
-            ,
+            input_text,
             new ImageGenerationOptions()
             {
                 Size = GeneratedImageSize.W1024xH1024

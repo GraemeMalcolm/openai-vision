@@ -47,7 +47,7 @@ def main():
 
 def save_image (image_url, file_name):
     # Set the directory for the stored image
-    image_dir = os.path.join(os.curdir, 'images')
+    image_dir = os.path.join(os.getcwd(), 'images')
 
     # If the directory doesn't exist, create it
     if not os.path.isdir(image_dir):
