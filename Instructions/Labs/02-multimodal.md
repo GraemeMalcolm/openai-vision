@@ -6,7 +6,7 @@ lab:
 
 # Develop multimodal generative AI apps
 
-In this exercise, you use the *Phi-4-multimodal-instruct* generative AI model to generate responses to multimodal prompts. You'll develop your app by using Azure AI Foundry and the Azure AI Model Inference service.
+In this exercise, you use the *Phi-4-multimodal-instruct* generative AI model to generate responses to prompts that include text, images, and audio. You'll develop an app that provides AI assistance with fresh produce in a grocery store by using Azure AI Foundry and the Azure AI Model Inference service.
 
 This exercise takes approximately **30** minutes.
 
