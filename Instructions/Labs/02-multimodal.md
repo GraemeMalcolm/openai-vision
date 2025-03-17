@@ -351,7 +351,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
-2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
+2. Use the **CTRL+S** command to save your changes to the code file. You can also close the code editor (**CTRL+Q**) if you like.
 
 3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
 
