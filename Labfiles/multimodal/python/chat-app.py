@@ -3,19 +3,6 @@ from urllib.request import urlopen, Request
 import base64
 
 # Add references
-from dotenv import load_dotenv
-from azure.identity import DefaultAzureCredential
-from azure.ai.projects import AIProjectClient
-from azure.ai.inference.models import (
-    SystemMessage,
-    UserMessage,
-    TextContentItem,
-    ImageContentItem,
-    ImageUrl,
-    AudioContentItem,
-    InputAudio,
-    AudioContentFormat,
-)
 
 
 def main(): 
