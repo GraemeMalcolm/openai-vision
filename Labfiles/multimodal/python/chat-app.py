@@ -29,7 +29,7 @@ def main():
 
         # Loop until the user types 'quit'
         while True:
-            input_text = input("Choose a prompt type (or type 'quit' to exit):\n-1: Text\n-2: Image\n-3: Audio\n ")
+            input_text = input("Choose a prompt type (or type 'quit' to exit):\n-1: Text\n-2: Image\n-3: Audio\n")
             if input_text.lower() == "quit":
                 break
             elif input_text == "1":
