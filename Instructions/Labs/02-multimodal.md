@@ -123,6 +123,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
    code .env
     ```
 
+    The file is opened in a code editor.
+
 <!--
     **C#**
 
@@ -131,7 +133,6 @@ Now that you've deployed the model, you can use the deployment in a client appli
     ```
 -->
 
-    The file is opened in a code editor.
 
 1. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
 1. After you've replaced the placeholders, use the **CTRL+S** command to save your changes and then use the **CTRL+Q** command to close the code editor while keeping the cloud shell command line open.
