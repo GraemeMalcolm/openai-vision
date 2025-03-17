@@ -274,7 +274,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-4. When prompted, enter `1` to use a text-based prompt and then enter the prompt `What's the best apple to use when making an apple pie?`
+4. When prompted, enter `1` to use a text-based prompt and then enter the prompt `I want to make an apple pie. What kind of apple should I use?`
 5. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an image-based prompt
@@ -321,7 +321,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is this, and what could I make with it?`
+4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `I don't know what kind of fruit this is. Can you identify it, and tell me what kinds of food I could make with it?`
 5. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an audio-based prompt
