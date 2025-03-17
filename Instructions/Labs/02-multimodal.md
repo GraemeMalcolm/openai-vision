@@ -323,7 +323,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-1. When prompted, enter `2` to use an image-based prompt and then enter the prompt `How many of thse would I need to make a gallon of marmelade?`
+1. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is in the image, and can I make marmelade from it?`
 1. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an audio-based prompt
