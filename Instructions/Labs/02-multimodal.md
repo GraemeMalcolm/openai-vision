@@ -321,7 +321,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is in the image, and can I make marmelade from it?`
+4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is this, and what could I make with it?`
 5. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an audio-based prompt
