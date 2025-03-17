@@ -130,6 +130,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    code appsettings.json
     ```
 -->
+
     The file is opened in a code editor.
 
 1. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
