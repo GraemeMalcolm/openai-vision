@@ -18,9 +18,9 @@ Let's start by creating an Azure AI Foundry project.
 
     ![Screenshot of Azure AI Foundry portal.](./Media/ai-foundry-home.png)
 
-1. In the home page, select **+ Create project**.
-1. In the **Create a project** wizard, enter a suitable project name for (for example, `my-ai-project`) then review the Azure resources that will be automatically created to support your project.
-1. Select **Customize** and specify the following settings for your hub:
+2. In the home page, select **+ Create project**.
+3. In the **Create a project** wizard, enter a suitable project name for (for example, `my-ai-project`) then review the Azure resources that will be automatically created to support your project.
+4. Select **Customize** and specify the following settings for your hub:
     - **Hub name**: *A unique name - for example `my-ai-hub`*
     - **Subscription**: *Your Azure subscription*
     - **Resource group**: *Create a new resource group with a unique name (for example, `my-ai-resources`), or select an existing one*
@@ -37,8 +37,8 @@ Let's start by creating an Azure AI Foundry project.
 
     > \* At the time of writing, the Microsoft *Phi-4-multimodal-instruct* is available in these regions. You can check the latest regional availability for specific models in the [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-foundry/how-to/deploy-models-serverless-availability#region-availability). In the event of a regional quota limit being reached later in the exercise, there's a possibility you may need to create another resource in a different region.
 
-1. Select **Next** and review your configuration. Then select **Create** and wait for the process to complete.
-1. When your project is created, close any tips that are displayed and review the project page in Azure AI Foundry portal, which should look similar to the following image:
+5. Select **Next** and review your configuration. Then select **Create** and wait for the process to complete.
+6. When your project is created, close any tips that are displayed and review the project page in Azure AI Foundry portal, which should look similar to the following image:
 
     ![Screenshot of a Azure AI project details in Azure AI Foundry portal.](./Media/ai-foundry-project.png)
 
@@ -47,14 +47,14 @@ Let's start by creating an Azure AI Foundry project.
 Now you're ready to deploy a *Phi-4-multimodal-instruct* model to support multimodal prompts.
 
 1. In the toolbar at the top right of your Azure AI Foundry project page, use the **Preview features** icon to enable the **Deploy models to Azure AI model inference service** feature. This feature ensures your model deployment is available to the Azure AI Inference service, which you'll use in your application code.
-1. In the pane on the left for your project, in the **My assets** section, select the **Models + endpoints** page.
-1. In the **Models + endpoints** page, in the **Model deployments** tab, in the **+ Deploy model** menu, select **Deploy base model**.
-1. Search for the **Phi-4-multimodal-instruct** model in the list, and then select and confirm it.
-1. Agree to the license agreement if prompted, and then deploy the model with the following settings by selecting **Customize** in the deployment details:
+2. In the pane on the left for your project, in the **My assets** section, select the **Models + endpoints** page.
+3. In the **Models + endpoints** page, in the **Model deployments** tab, in the **+ Deploy model** menu, select **Deploy base model**.
+4. Search for the **Phi-4-multimodal-instruct** model in the list, and then select and confirm it.
+5. Agree to the license agreement if prompted, and then deploy the model with the following settings by selecting **Customize** in the deployment details:
     - **Deployment name**: *A unique name for your model deployment - for example `Phi-4-multimodal` (remember the name you assign, you'll need it later*)
     - **Deployment type**: Global Standard
     - **Deployment details**: *Use the default settings*
-1. Wait for the deployment provisioning state to be **Completed**.
+6. Wait for the deployment provisioning state to be **Completed**.
 
 ## Create a client application
 
@@ -65,17 +65,17 @@ Now that you've deployed the model, you can use the deployment in a client appli
 ### Prepare the application configuration
 
 1. In the Azure AI Foundry portal, view the **Overview** page for your project.
-1. In the **Project details** area, note the **Project connection string**. You'll use this connection string to connect to your project in a client application.
-1. Open a new browser tab (keeping the Azure AI Foundry portal open in the existing tab). Then in the new tab, browse to the [Azure portal](https://portal.azure.com) at `https://portal.azure.com`; signing in with your Azure credentials if prompted.
-1. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new Cloud Shell in the Azure portal, selecting a ***PowerShell*** environment. The cloud shell provides a command line interface in a pane at the bottom of the Azure portal.
+2. In the **Project details** area, note the **Project connection string**. You'll use this connection string to connect to your project in a client application.
+3. Open a new browser tab (keeping the Azure AI Foundry portal open in the existing tab). Then in the new tab, browse to the [Azure portal](https://portal.azure.com) at `https://portal.azure.com`; signing in with your Azure credentials if prompted.
+4. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new Cloud Shell in the Azure portal, selecting a ***PowerShell*** environment. The cloud shell provides a command line interface in a pane at the bottom of the Azure portal.
 
     > **Note**: If you have previously created a cloud shell that uses a *Bash* environment, switch it to ***PowerShell***.
 
-1. In the cloud shell toolbar, in the **Settings** menu, select **Go to Classic version** (this is required to use the code editor).
+5. In the cloud shell toolbar, in the **Settings** menu, select **Go to Classic version** (this is required to use the code editor).
 
     > **Tip**: As you paste commands into the cloudshell, the ouput may take up a large amount of the screen buffer. You can clear the screen by entering the `cls` command to make it easier to focus on each task.
 
-1. In the PowerShell pane, enter the following commands to clone the GitHub repo for this exercise:
+6. In the PowerShell pane, enter the following commands to clone the GitHub repo for this exercise:
 
     ```
     rm -r openai-vision -f
@@ -84,7 +84,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
 > **Note**: Follow the steps for your chosen programming language.
 
-1. After the repo has been cloned, navigate to the folder containing the application code files:  
+7. After the repo has been cloned, navigate to the folder containing the application code files:  
 
     **Python**
 
@@ -98,7 +98,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    cd openai-vision/Labfiles/multimodal/c-sharp
     ```
 -->
-1. In the cloud shell command line pane, enter the following command to install the libraries you'll use:
+8. In the cloud shell command line pane, enter the following command to install the libraries you'll use:
 
     **Python**
 
@@ -115,7 +115,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet add package Azure.AI.OpenAI
     ```
 -->
-1. Enter the following command to edit the configuration file that has been provided:
+9. Enter the following command to edit the configuration file that has been provided:
 
     **Python**
 
@@ -134,8 +134,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
 -->
 
 
-1. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
-1. After you've replaced the placeholders, use the **CTRL+S** command to save your changes and then use the **CTRL+Q** command to close the code editor while keeping the cloud shell command line open.
+10. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
+11. After you've replaced the placeholders, use the **CTRL+S** command to save your changes and then use the **CTRL+Q** command to close the code editor while keeping the cloud shell command line open.
 
 ### Write code to connect to your project and get a chat client for your model
 
@@ -156,7 +156,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    code Program.cs
     ```
 -->
-1. In the code file, note the existing statements that have been added at the top of the file to import the necessary SDK namespaces. Then, under the comment **Add references**, add the following code to reference the namespaces in the libraries you installed previously:
+2. In the code file, note the existing statements that have been added at the top of the file to import the necessary SDK namespaces. Then, under the comment **Add references**, add the following code to reference the namespaces in the libraries you installed previously:
 
     **Python**
 
@@ -186,8 +186,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
    using OpenAI.Images;
     ```
 -->
-1. In the **main** function, under the comment **Get configuration settings**, note that the code loads the project connection string and model deployment name values you defined in the configuration file.
-1. Under the comment **Initialize the project client**, add the following code to connect to your Azure AI Foundry project using the Azure credentials you are currently signed in with:
+3. In the **main** function, under the comment **Get configuration settings**, note that the code loads the project connection string and model deployment name values you defined in the configuration file.
+4. Under the comment **Initialize the project client**, add the following code to connect to your Azure AI Foundry project using the Azure credentials you are currently signed in with:
 
     **Python**
 
@@ -205,7 +205,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
                         new DefaultAzureCredential());
     ```
 -->
-1. Under the comment **Get a chat client**, add the following code to create a client object for chatting with your model:
+5. Under the comment **Get a chat client**, add the following code to create a client object for chatting with your model:
 
     **Python**
 
@@ -259,9 +259,9 @@ Now that you've deployed the model, you can use the deployment in a client appli
     ```
 -->
 
-1. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
+2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
 
-1. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
+3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
 
     **Python**
 
@@ -276,8 +276,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-1. When prompted, enter `1` to use a text-based prompt and then enter the prompt `What's the best apple to use when making an apple pie?`
-1. Review the response. Then enter `quit` to exit the program.
+4. When prompted, enter `1` to use a text-based prompt and then enter the prompt `What's the best apple to use when making an apple pie?`
+5. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an image-based prompt
 
@@ -306,9 +306,9 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
-1. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
+2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
 
-1. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
+3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
 
     **Python**
 
@@ -323,8 +323,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-1. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is in the image, and can I make marmelade from it?`
-1. Review the response. Then enter `quit` to exit the program.
+4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `What is in the image, and can I make marmelade from it?`
+5. Review the response. Then enter `quit` to exit the program.
 
 ### Write code to use an audio-based prompt
 
@@ -353,9 +353,9 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
-1. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
+2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
 
-1. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
+3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
 
     **Python**
 
@@ -370,9 +370,9 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-1. When prompted, enter `3` to use an audio-based prompt and then enter the prompt `Translate this to English`
-1. Review the response.
-1. You can continue to run the app, choosing different prompt types and trying different prompts. When you're finished, enter `quit` to exit the program.
+4. When prompted, enter `3` to use an audio-based prompt and then enter the prompt `Translate this to English`
+5. Review the response.
+6. You can continue to run the app, choosing different prompt types and trying different prompts. When you're finished, enter `quit` to exit the program.
 
     If you have time, you can modify the code to use a different system prompt and your own internet-accessible image and audio files.
 
