@@ -89,13 +89,13 @@ Now that you've deployed the model, you can use the deployment in a client appli
     ```
    cd openai-vision/Labfiles/multimodal/python
     ```
-<!--
+
     **C#**
 
     ```
    cd openai-vision/Labfiles/multimodal/c-sharp
     ```
--->
+
 8. In the cloud shell command line pane, enter the following command to install the libraries you'll use:
 
     **Python**
@@ -104,15 +104,14 @@ Now that you've deployed the model, you can use the deployment in a client appli
    pip install python-dotenv azure-identity azure-ai-projects azure-ai-inference
     ```
 
-<!--
     **C#**
 
     ```
    dotnet add package Azure.Identity
-   dotnet add package Azure.AI.Projects --prerelease
-   dotnet add package Azure.AI.OpenAI
+   dotnet add package Azure.AI.Inference --version 1.0.0-beta.3
+   dotnet add package Azure.AI.Projects --version 1.0.0-beta.3
     ```
--->
+
 9. Enter the following command to edit the configuration file that has been provided:
 
     **Python**
@@ -121,16 +120,13 @@ Now that you've deployed the model, you can use the deployment in a client appli
    code .env
     ```
 
-    The file is opened in a code editor.
-
-<!--
     **C#**
 
     ```
    code appsettings.json
     ```
--->
 
+    The file is opened in a code editor.
 
 10. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
 11. After you've replaced the placeholders, use the **CTRL+S** command to save your changes and then use the **CTRL+Q** command to close the code editor while keeping the cloud shell command line open.
@@ -147,13 +143,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    code chat-app.py
     ```
 
-<!--
     **C#**
 
     ```
    code Program.cs
     ```
--->
+
 2. In the code file, note the existing statements that have been added at the top of the file to import the necessary SDK namespaces. Then, under the comment **Add references**, add the following code to reference the namespaces in the libraries you installed previously:
 
     **Python**
@@ -174,16 +169,14 @@ Now that you've deployed the model, you can use the deployment in a client appli
    )
     ```
 
-<!--
     **C#**
 
     ```
    using Azure.Identity;
    using Azure.AI.Projects;
-   using Azure.AI.OpenAI;
-   using OpenAI.Images;
+   using Azure.AI.Inference;
     ```
--->
+
 3. In the **main** function, under the comment **Get configuration settings**, note that the code loads the project connection string and model deployment name values you defined in the configuration file.
 4. Under the comment **Initialize the project client**, add the following code to connect to your Azure AI Foundry project using the Azure credentials you are currently signed in with:
 
@@ -195,14 +188,13 @@ Now that you've deployed the model, you can use the deployment in a client appli
         credential=DefaultAzureCredential())
     ```
 
-<!--
     **C#**
 
     ```
    var projectClient = new AIProjectClient(project_connection,
                         new DefaultAzureCredential());
     ```
--->
+
 5. Under the comment **Get a chat client**, add the following code to create a client object for chatting with your model:
 
     **Python**
@@ -211,21 +203,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    chat_client = project_client.inference.get_chat_completions_client(model=model_deployment)
     ```
 
-<!--
     **C#**
 
     ```
-   ConnectionResponse connection = projectClient.GetConnectionsClient().GetDefaultConnection(ConnectionType.AzureOpenAI, withCredential: true);
-
-   var connectionProperties = connection.Properties as ConnectionPropertiesApiKeyAuth;
-
-   AzureOpenAIClient openAIClient = new(
-        new Uri(connectionProperties.Target),
-        new AzureKeyCredential(connectionProperties.Credentials.Key));
-
-   ImageClient openAIimageClient = openAIClient.GetImageClient(model_deployment);
+   ChatCompletionsClient chat = projectClient.GetChatCompletionsClient();
     ```
--->
+
 
 ### Write code to use a text-based prompt
 
@@ -242,20 +225,22 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
-<!--
     **C#**
 
     ```
-   var imageGeneration = await openAIimageClient.GenerateImageAsync(
-            input_text,
-            new ImageGenerationOptions()
-            {
-                Size = GeneratedImageSize.W1024xH1024
-            }
-   );
-   imageUrl= imageGeneration.Value.ImageUri;
+   var requestOptions = new ChatCompletionsOptions()
+   {
+   Model = model_deployment,
+   Messages =
+       {
+           new ChatRequestSystemMessage(system_message),
+           new ChatRequestUserMessage(prompt),
+       }
+   };
+
+   Response<ChatCompletions> response = chat.Complete(requestOptions);
+   Console.WriteLine(response.Value.Content);
     ```
--->
 
 2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
 
@@ -267,13 +252,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    python chat-app.py
     ```
 
-<!--
     **C#**
 
     ```
    dotnet run
     ```
--->
+
 4. When prompted, enter `1` to use a text-based prompt and then enter the prompt `I want to make an apple pie. What kind of apple should I use?`
 5. Review the response. Then enter `quit` to exit the program.
 
@@ -304,6 +288,25 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
+    **C#**
+
+    ```csharp
+  string imageUrl = "https://github.com/GraemeMalcolm/openai-vision/raw/refs/heads/main/Labfiles/multimodal/orange.jpg";
+   ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
+   {
+       Messages = {
+           new ChatRequestSystemMessage(system_message),
+           new ChatRequestUserMessage([
+               new ChatMessageTextContentItem(prompt),
+               new ChatMessageImageContentItem(new Uri(imageUrl))
+           ]),
+       },
+       Model = model_deployment
+   };
+   var response = chat.Complete(requestOptions);
+   Console.WriteLine(response.Value.Content);
+    ```
+
 2. Use the **CTRL+S** command to save your changes to the code file - don't close it yet though.
 
 3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
@@ -314,13 +317,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    python chat-app.py
     ```
 
-<!--
     **C#**
 
     ```
    dotnet run
     ```
--->
+
 4. When prompted, enter `2` to use an image-based prompt and then enter the prompt `I don't know what kind of fruit this is. Can you identify it, and tell me what kinds of food I could make with it?`
 5. Review the response. Then enter `quit` to exit the program.
 
@@ -351,6 +353,26 @@ Now that you've deployed the model, you can use the deployment in a client appli
    print(response.choices[0].message.content)
     ```
 
+    **C#**
+
+    ```csharp
+   string audioUrl="https://github.com/GraemeMalcolm/openai-vision/raw/refs/heads/main/Labfiles/multimodal/manzanas.mp3";
+   var requestOptions = new ChatCompletionsOptions()
+   {
+       Messages =
+       {
+           new ChatRequestSystemMessage(system_message),
+           new ChatRequestUserMessage(
+               new ChatMessageTextContentItem(prompt),
+               new ChatMessageAudioContentItem(new Uri(audioUrl))),
+       },
+       Model = model_deployment
+   };
+   var response = chat.Complete(requestOptions);
+   Console.WriteLine(response.Value.Content);
+    ```
+
+
 2. Use the **CTRL+S** command to save your changes to the code file. You can also close the code editor (**CTRL+Q**) if you like.
 
 3. In the cloud shell command line pane beneath the code editor, enter the following command to run the app:
@@ -361,13 +383,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    python chat-app.py
     ```
 
-<!--
     **C#**
 
     ```
    dotnet run
     ```
--->
+
 4. When prompted, enter `3` to use an audio-based prompt and then enter the prompt `What is this customer saying in English?`
 5. Review the response.
 6. You can continue to run the app, choosing different prompt types and trying different prompts. When you're finished, enter `quit` to exit the program.

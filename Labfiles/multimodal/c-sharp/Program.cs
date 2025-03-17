@@ -27,8 +27,13 @@ namespace chat_app
                 // Initialize the project client
 
 
+
                 // Get a chat client
 
+
+
+                string system_message = "You are an AI assistent in a grocery store that sells fruit.";
+                string prompt = "";
 
                 // Loop until the user types 'quit'
                 string input_text = "";
@@ -43,7 +48,7 @@ namespace chat_app
                         {
                             case "1":
                                 Console.WriteLine("Enter the prompt: ");
-                                string prompt = Console.ReadLine();
+                                prompt = Console.ReadLine();
                                 if (string.IsNullOrEmpty(prompt))
                                 {
                                     Console.WriteLine("Please enter a prompt.");
@@ -59,7 +64,7 @@ namespace chat_app
                                 break;
                             case "2":
                                 Console.WriteLine("Enter the prompt to accompany the image: ");
-                                string prompt = Console.ReadLine();
+                                prompt = Console.ReadLine();
                                 if (string.IsNullOrEmpty(prompt))
                                 {
                                     Console.WriteLine("Please enter a prompt.");
@@ -75,7 +80,7 @@ namespace chat_app
                                 break;
                             case "3":
                                 Console.WriteLine("Enter the prompt to accompany an audio recording of 'Me gustaría comprar 2 manzanas.':");
-                                string prompt = Console.ReadLine();
+                                prompt = Console.ReadLine();
                                 if (string.IsNullOrEmpty(prompt))
                                 {
                                     Console.WriteLine("Please enter a prompt.");
