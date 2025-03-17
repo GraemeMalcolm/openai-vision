@@ -368,7 +368,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 -->
-4. When prompted, enter `3` to use an audio-based prompt and then enter the prompt `Translate this to English`
+4. When prompted, enter `3` to use an audio-based prompt and then enter the prompt `What is this customer saying in English?`
 5. Review the response.
 6. You can continue to run the app, choosing different prompt types and trying different prompts. When you're finished, enter `quit` to exit the program.
 
