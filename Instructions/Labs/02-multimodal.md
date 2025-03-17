@@ -73,8 +73,6 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
 5. In the cloud shell toolbar, in the **Settings** menu, select **Go to Classic version** (this is required to use the code editor).
 
-    > **Tip**: As you paste commands into the cloudshell, the ouput may take up a large amount of the screen buffer. You can clear the screen by entering the `cls` command to make it easier to focus on each task.
-
 6. In the PowerShell pane, enter the following commands to clone the GitHub repo for this exercise:
 
     ```
@@ -82,7 +80,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
     git clone https://github.com/graememalcolm/openai-vision openai-vision
     ```
 
-> **Note**: Follow the steps for your chosen programming language.
+    > **Tip**: As you paste commands into the cloudshell, the ouput may take up a large amount of the screen buffer. You can clear the screen by entering the `cls` command to make it easier to focus on each task.
 
 7. After the repo has been cloned, navigate to the folder containing the application code files:  
 
