@@ -91,7 +91,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
     ```
    cd openai-vision/Labfiles/multimodal/python
     ```
-<!-->
+<!--
     **C#**
 
     ```
