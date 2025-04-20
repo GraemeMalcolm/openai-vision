@@ -16,14 +16,14 @@ Let's start by creating an Azure AI Foundry project.
 
 1. In a web browser, open the [Azure AI Foundry portal](https://ai.azure.com) at `https://ai.azure.com` and sign in using your Azure credentials. Close any tips or quick start panes that are opened the first time you sign in, and if necessary use the **Azure AI Foundry** logo at the top left to navigate to the home page, which looks similar to the following image:
 
-    ![Screenshot of Azure AI Foundry portal.](./Media/ai-foundry-home.png)
+    ![Screenshot of Azure AI Foundry portal.](./media/ai-foundry-home.png)
 
 2. In the home page, select **+ Create project**.
-3. In the **Create a project** wizard, enter a suitable project name for (for example, `my-ai-project`) then review the Azure resources that will be automatically created to support your project.
+3. In the **Create a project** wizard, enter a valid name for your project and if an existing hub is suggested, choose the option to create a new one. Then review the Azure resources that will be automatically created to support your hub and project.
 4. Select **Customize** and specify the following settings for your hub:
-    - **Hub name**: *A unique name - for example `my-ai-hub`*
+    - **Hub name**: *A valid name for your hub*
     - **Subscription**: *Your Azure subscription*
-    - **Resource group**: *Create a new resource group with a unique name (for example, `my-ai-resources`), or select an existing one*
+    - **Resource group**: *Create or select a resource group*
     - **Location**: Select any of the following regions\*:
         - East US
         - East US 2
@@ -32,26 +32,26 @@ Let's start by creating an Azure AI Foundry project.
         - Sweden Central
         - West US
         - West US 3
-    - **Connect Azure AI Services or Azure OpenAI**: *Create a new AI Services resource with an appropriate name (for example, `my-ai-services`) or use an existing one*
+    - **Connect Azure AI Services or Azure OpenAI**: *Create a new AI Services resource*
     - **Connect Azure AI Search**: Skip connecting
 
-    > \* At the time of writing, the Microsoft *Phi-4-multimodal-instruct* is available in these regions. You can check the latest regional availability for specific models in the [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-foundry/how-to/deploy-models-serverless-availability#region-availability). In the event of a regional quota limit being reached later in the exercise, there's a possibility you may need to create another resource in a different region.
+    > \* At the time of writing, the Microsoft *Phi-4-multimodal-instruct* model we're going to use in this exercise is available in these regions. You can check the latest regional availability for specific models in the [Azure AI Foundry documentation](https://learn.microsoft.com/azure/ai-foundry/how-to/deploy-models-serverless-availability#region-availability). In the event of a regional quota limit being reached later in the exercise, there's a possibility you may need to create another resource in a different region.
 
 5. Select **Next** and review your configuration. Then select **Create** and wait for the process to complete.
 6. When your project is created, close any tips that are displayed and review the project page in Azure AI Foundry portal, which should look similar to the following image:
 
-    ![Screenshot of a Azure AI project details in Azure AI Foundry portal.](./Media/ai-foundry-project.png)
+    ![Screenshot of a Azure AI project details in Azure AI Foundry portal.](./media/ai-foundry-project.png)
 
 ## Deploy a multimodal model
 
 Now you're ready to deploy a multimodal model that can support image-based input. There are several models you could choose from, including the OpenAI *gpt-4o* model. In this exercise, we'll use a *Phi-4-multimodal-instruct* model that support prompts that include images.
 
-1. In the toolbar at the top right of your Azure AI Foundry project page, use the **Preview features** icon to enable the **Deploy models to Azure AI model inference service** feature. This feature ensures your model deployment is available to the Azure AI Inference service, which you'll use in your application code.
+1. In the toolbar at the top right of your Azure AI Foundry project page, use the **Preview features** (**&#9215;**) icon to ensure that the **Deploy models to Azure AI model inference service** feature is enabled. This feature ensures your model deployment is available to the Azure AI Inference service, which you'll use in your application code.
 2. In the pane on the left for your project, in the **My assets** section, select the **Models + endpoints** page.
 3. In the **Models + endpoints** page, in the **Model deployments** tab, in the **+ Deploy model** menu, select **Deploy base model**.
 4. Search for the **Phi-4-multimodal-instruct** model in the list, and then select and confirm it.
 5. Agree to the license agreement if prompted, and then deploy the model with the following settings by selecting **Customize** in the deployment details:
-    - **Deployment name**: *A unique name for your model deployment - for example `Phi-4-multimodal` (remember the name you assign, you'll need it later*)
+    - **Deployment name**: *A valid name for your model deployment*
     - **Deployment type**: Global Standard
     - **Deployment details**: *Use the default settings*
 6. Wait for the deployment provisioning state to be **Completed**.
@@ -67,13 +67,21 @@ Now that you've deployed the model, you can use the deployment in a client appli
 1. In the Azure AI Foundry portal, view the **Overview** page for your project.
 2. In the **Project details** area, note the **Project connection string**. You'll use this connection string to connect to your project in a client application.
 3. Open a new browser tab (keeping the Azure AI Foundry portal open in the existing tab). Then in the new tab, browse to the [Azure portal](https://portal.azure.com) at `https://portal.azure.com`; signing in with your Azure credentials if prompted.
-4. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new Cloud Shell in the Azure portal, selecting a ***PowerShell*** environment. The cloud shell provides a command line interface in a pane at the bottom of the Azure portal.
+
+    Close any welcome notifications to see the Azure portal home page.
+
+1. Use the **[\>_]** button to the right of the search bar at the top of the page to create a new Cloud Shell in the Azure portal, selecting a ***PowerShell*** environment with no storage in your subscription.
+
+    The cloud shell provides a command-line interface in a pane at the bottom of the Azure portal. You can resize or maximize this pane to make it easier to work in.
 
     > **Note**: If you have previously created a cloud shell that uses a *Bash* environment, switch it to ***PowerShell***.
 
 5. In the cloud shell toolbar, in the **Settings** menu, select **Go to Classic version** (this is required to use the code editor).
 
-6. In the PowerShell pane, enter the following commands to clone the GitHub repo for this exercise:
+    **<font color="red">Ensure you've switched to the classic version of the cloud shell before continuing.</font>**
+
+1. In the cloud shell pane, enter the following commands to clone the GitHub repo containing the code files for this exercise (type the command, or copy it to the clipboard and then right-click in the command line and paste as plain text):
+
 
     ```
     rm -r openai-vision -f
@@ -101,6 +109,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
     **Python**
 
     ```
+   python -m venv labenv
+   ./labenv/bin/Activate.ps1
    pip install python-dotenv azure-identity azure-ai-projects azure-ai-inference
     ```
 
@@ -128,8 +138,8 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
     The file is opened in a code editor.
 
-10. In the code file, replace the **your_project_endpoint** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
-11. After you've replaced the placeholders, use the **CTRL+S** command to save your changes and then use the **CTRL+Q** command to close the code editor while keeping the cloud shell command line open.
+10. In the code file, replace the **your_project_connection_string** placeholder with the connection string for your project (copied from the project **Overview** page in the Azure AI Foundry portal), and the **your_model_deployment** placeholder with the name you assigned to your Phi-4-multimodal-instruct model deployment.
+11. After you've replaced the placeholders, in the code editor, use the **CTRL+S** command or **Right-click > Save** to save your changes and then use the **CTRL+Q** command or **Right-click > Quit** to close the code editor while keeping the cloud shell command line open.
 
 ### Write code to connect to your project and get a chat client for your model
 
@@ -159,11 +169,11 @@ Now that you've deployed the model, you can use the deployment in a client appli
    from azure.identity import DefaultAzureCredential
    from azure.ai.projects import AIProjectClient
    from azure.ai.inference.models import (
-       SystemMessage,
-       UserMessage,
-       TextContentItem,
-       ImageContentItem,
-       ImageUrl,
+        SystemMessage,
+        UserMessage,
+        TextContentItem,
+        ImageContentItem,
+        ImageUrl,
    )
     ```
 
@@ -229,13 +239,13 @@ Now that you've deployed the model, you can use the deployment in a client appli
    data_url = f"data:image/{image_format};base64,{image_data}"
 
    response = chat_client.complete(
-       messages=[
-           SystemMessage(system_message),
-           UserMessage(content=[
-               TextContentItem(text=prompt),
-               ImageContentItem(image_url=ImageUrl(url=data_url))
-           ]),
-       ]
+        messages=[
+            SystemMessage(system_message),
+            UserMessage(content=[
+                TextContentItem(text=prompt),
+                ImageContentItem(image_url=ImageUrl(url=data_url))
+            ]),
+        ]
    )
    print(response.choices[0].message.content)
     ```
@@ -244,17 +254,17 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
     ```csharp
    // Get a response to image input
-  string imageUrl = "https://github.com/GraemeMalcolm/openai-vision/raw/refs/heads/main/Labfiles/vision-chat/fruit.jpeg";
+   string imageUrl = "https://github.com/GraemeMalcolm/openai-vision/raw/refs/heads/main/Labfiles/vision-chat/fruit.jpeg";
    ChatCompletionsOptions requestOptions = new ChatCompletionsOptions()
    {
-       Messages = {
+        Messages = {
            new ChatRequestSystemMessage(system_message),
            new ChatRequestUserMessage([
-               new ChatMessageTextContentItem(prompt),
-               new ChatMessageImageContentItem(new Uri(imageUrl))
-           ]),
-       },
-       Model = model_deployment
+                new ChatMessageTextContentItem(prompt),
+                new ChatMessageImageContentItem(new Uri(imageUrl))
+            ]),
+        },
+        Model = model_deployment
    };
    var response = chat.Complete(requestOptions);
    Console.WriteLine(response.Value.Content);
@@ -276,12 +286,17 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 
-4. When prompted, enter the prompt `I don't know what kind of fruit this is. Can you identify it, and tell me what kinds of food I could make with it?`
+4. When prompted, enter the following prompt:
+
+    ```
+   What is this fruit? What recipes could I use it in?
+    ```
+
 5. Review the response. Then enter `quit` to exit the program.
 
 ### Modify the code to upload a local image file
 
-1. In the code editor for the **chat-app.py** file, in the loop section, find the code you added previously under the comment **Get a response to image input**. Then modify the code as follows, to upload this local image file:
+1. In the code editor for your app code, in the loop section, find the code you added previously under the comment **Get a response to image input**. Then modify the code as follows, to upload this local image file:
 
     ![A photo of a dragon fruit.](../../Labfiles/vision-chat/python/mystery-fruit.jpeg)
 
@@ -355,7 +370,12 @@ Now that you've deployed the model, you can use the deployment in a client appli
    dotnet run
     ```
 
-4. When prompted, enter the prompt `I don't know what kind of fruit this is. Can you identify it, and tell me what kinds of food I could make with it?`
+4. When prompted, enter the following prompt:
+
+    ```
+   What is this fruit? What recipes could I use it in?
+    ```
+
 5. Review the response. Then enter `quit` to exit the program.
 
     > **Note**: In this simple app, we haven't implemented logic to retain conversation history; so the model will treat each prompt as a new request with no context of the previous prompt.

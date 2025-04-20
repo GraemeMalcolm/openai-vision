@@ -2,6 +2,7 @@
 using Azure;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
 // Add references
@@ -45,11 +46,11 @@ namespace chat_app
                     // Get user input
                     Console.WriteLine("\nAsk a question about the image\n(or type 'quit' to exit)\n");
                     prompt = Console.ReadLine().ToLower();
-                    if (prompt = "quit")
+                    if (prompt == "quit")
                     {
                         break;
                     }
-                    else if (prompt.length < 1)
+                    else if (prompt.Length < 1)
                     {
                         Console.WriteLine("Please enter a question.\n");
                         continue;
