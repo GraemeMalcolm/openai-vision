@@ -380,9 +380,11 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
     > **Note**: In this simple app, we haven't implemented logic to retain conversation history; so the model will treat each prompt as a new request with no context of the previous prompt.
 
-## Challenge: Use a different multimodal model
+## Explore further: (If time permits)
 
-### (If time permits)
+You've learned how to use the Azure AI Inference SDK and a multimodal model to implement a generative AI app that can respond to image-based prompts. If you have time, here are some ideas for further exploration.
+
+### Use a different multimodal model
 
 You've used a *Phi-4-multimodal-instruct* model to generate a response to an image-based prompt. Now let's try an OpenAI *gpt-4o* model.
 
@@ -390,10 +392,132 @@ You've used a *Phi-4-multimodal-instruct* model to generate a response to an ima
 1. Update the code configuration file for your app (*.env* for Python, *appsettings.json* for C#) to specify the name of your gpt-4o model.
 1. Run the app as before, using the same prompts (you can revert to the code that uses a URL-based image if you like).
 
-## Summary
+### Use OpenAI APIs
 
-In this exercise, you used Azure AI Foundry and the Azure AI Inference SDK to create a client application uses a multimodal model to generate responses to image-based prompts.
+The code you used in this exercise is based on the Azure AI Inference SDK, which works with any model deployed to an Azure AI Model Inference endpoint. When using an OpenAI model, you can alternatively use the OpenAI SDK.
 
+The following instructions assume you have completed this exercise and the additional task above to deploy and test a **gpt-4o** model.
+
+1. Install (or update) the necessary packages for your app:
+
+    **Python**
+
+    ```
+   python -m venv labenv
+   ./labenv/bin/Activate.ps1
+   pip install python-dotenv azure-identity azure-ai-projects openai
+    ```
+    
+    **C#**
+
+    ```
+   dotnet add package Azure.Identity
+   dotnet add package Azure.AI.Projects --prerelease
+   dotnet add package Azure.AI.OpenAI --prerelease
+    ```
+
+1. Update the namespaces in your code file (removing *azure.ai-inference* references):
+
+    **Python**
+
+    ```python
+   # Add references
+   from dotenv import load_dotenv
+   from azure.identity import DefaultAzureCredential
+   from azure.ai.projects import AIProjectClient
+   import openai
+    ```
+
+    **C#**
+
+    ```csharp
+   // Add references
+   using Azure.Identity;
+   using Azure.AI.Projects;
+   using OpenAI.Chat;
+   using Azure.AI.OpenAI;
+    ```
+
+1. Modify code to get a chat client:
+
+    **Python**
+
+    ```python
+   # Get a chat client
+   chat_client = project_client.inference.get_azure_openai_client(api_version="2024-10-21")
+    ```
+
+    **C#**
+
+    ```csharp
+   // Get a chat client
+   ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(model_deployment);
+    ```
+
+1. Modify the code to get a completion based on a local image file
+
+    **Python**
+
+    ```python
+   # Get a response to image input
+   script_dir = Path(__file__).parent  # Get the directory of the script
+   image_path = script_dir / 'mystery-fruit.jpeg'
+   mime_type = "image/jpeg"
+
+   # Read and encode the image file
+   with open(image_path, "rb") as image_file:
+        base64_encoded_data = base64.b64encode(image_file.read()).decode('utf-8')
+
+   # Include the image file data in the prompt
+   data_url = f"data:{mime_type};base64,{base64_encoded_data}"
+
+   response = chat_client.chat.completions.create(
+        model=model_deployment,
+        messages=[
+            { "role": "system", "content": system_message },
+            { "role": "user", "content": [  
+                { 
+                    "type": "text", 
+                    "text": prompt 
+                },
+                { 
+                    "type": "image_url",
+                    "image_url": {
+                        "url": data_url
+                    }
+                }
+            ] } 
+        ]
+   )
+   completion = response.choices[0].message.content
+   print(completion)
+    ```
+
+    **C#**
+
+    ```csharp
+   // Get a response to image input
+   string imagePath = "mystery-fruit.jpeg";
+   string mimeType = "image/jpeg";
+    
+   // Read and encode the image file
+   byte[] imageBytes = File.ReadAllBytes(imagePath);
+   var binaryImage = new BinaryData(imageBytes);
+
+   List<ChatMessage> messages =
+   [
+        new SystemChatMessage(system_message),
+        new UserChatMessage(
+            ChatMessageContentPart.CreateTextPart(prompt),
+            ChatMessageContentPart.CreateImagePart(binaryImage, mimeType)),
+   ];
+
+   ChatCompletion completion = chatClient.CompleteChat(messages);
+
+   Console.WriteLine(completion.Content[0].Text);
+    ```
+
+1. Save your changes and run the app to test it with the same prompts you used previosyly.
 
 ## Clean up
 
