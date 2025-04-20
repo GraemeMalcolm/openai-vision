@@ -289,7 +289,7 @@ Now that you've deployed the model, you can use the deployment in a client appli
 4. When prompted, enter the following prompt:
 
     ```
-   What is this fruit? What recipes could I use it in?
+   Suggest some recipes that include this fruit
     ```
 
 5. Review the response. Then enter `quit` to exit the program.
@@ -380,9 +380,20 @@ Now that you've deployed the model, you can use the deployment in a client appli
 
     > **Note**: In this simple app, we haven't implemented logic to retain conversation history; so the model will treat each prompt as a new request with no context of the previous prompt.
 
+## Challenge: Use a different multimodal model
+
+### (If time permits)
+
+You've used a *Phi-4-multimodal-instruct* model to generate a response to an image-based prompt. Now let's try an OpenAI *gpt-4o* model.
+
+1. In Azure AI Foundry, deploy a **gpt-4o** model to an Azure AI Model Inference endpoint (you may need to create a new resource in a different region).
+1. Update the code configuration file for your app (*.env* for Python, *appsettings.json* for C#) to specify the name of your gpt-4o model.
+1. Run the app as before, using the same prompts (you can revert to the code that uses a URL-based image if you like).
+
 ## Summary
 
-In this exercise, you used Azure AI Foundry and the Azure AI Inference SDK to create a client application uses a multimodal model to generate responses to text, images, and audio.
+In this exercise, you used Azure AI Foundry and the Azure AI Inference SDK to create a client application uses a multimodal model to generate responses to image-based prompts.
+
 
 ## Clean up
 
